@@ -220,14 +220,20 @@ type UserInfo struct {
 	Profile       string `json:"profile"`
 	Email         string `json:"email"`
 	EmailVerified bool   `json:"email_verified"`
+	Name 		  string `json:"name"`
+	GivenName 	  string `json:"given_name"`
+	FamilyName 	  string `json:"family_name"`
 
 	claims []byte
 }
 
 type userInfoRaw struct {
-	Subject string `json:"sub"`
-	Profile string `json:"profile"`
-	Email   string `json:"email"`
+	Subject    string `json:"sub"`
+	Profile    string `json:"profile"`
+	Email      string `json:"email"`
+	Name 	   string `json:"name"`
+	GivenName  string `json:"given_name"`
+	FamilyName string `json:"family_name"`
 	// Handle providers that return email_verified as a string
 	// https://forums.aws.amazon.com/thread.jspa?messageID=949441&#949441 and
 	// https://discuss.elastic.co/t/openid-error-after-authenticating-against-aws-cognito/206018/11
@@ -290,6 +296,9 @@ func (p *Provider) UserInfo(ctx context.Context, tokenSource oauth2.TokenSource)
 		Subject:       userInfo.Subject,
 		Profile:       userInfo.Profile,
 		Email:         userInfo.Email,
+		Name: 		   userInfo.Name,
+		GivenName:     userInfo.GivenName,
+		FamilyName:    userInfo.FamilyName,
 		EmailVerified: bool(userInfo.EmailVerified),
 		claims:        body,
 	}, nil
